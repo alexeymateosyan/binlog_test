@@ -261,8 +261,14 @@ public:
  *
  */
 int main(int argc, char **argv) {
-
+    
     std::string connectionStr("mysql://root:root@localhost:13000");
+    if (argc > 1) {
+        if (argv[1] == strstr(argv[1], "mysql://")) {
+            connectionStr.assign(argv[1]);
+        }
+    }
+    std::cout << "Trying to connect to <" << connectionStr << ">\n";
 
     std::unique_ptr<system::Binary_log_driver> drv(mysql::system::create_transport(connectionStr.c_str()));
 
